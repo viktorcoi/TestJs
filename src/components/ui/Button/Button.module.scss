@@ -1,0 +1,22 @@
+.button {
+    text-align: center;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+    padding: 8px 12px;
+    border-radius: 10px;
+    color: var(--color-text-second);
+    &:disabled {
+        opacity: .6;
+        pointer-events: none;
+    }
+    background-color: var(--bg-button);
+    @media (hover: hover) {
+        &:hover {
+            background-color: var(--bg-button-hover);
+        }
+    }
+    &:active {
+        background-color: var(--bg-button);
+    }
+}

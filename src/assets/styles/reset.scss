@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-wrap: inherit;
+    -webkit-tap-highlight-color: transparent;
+    font-family: "Inter", sans-serif !important;
+}
+
+button {
+    box-sizing: border-box !important;
+}
+
+li { list-style-type: none; }
+
+img {
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000000s ease-in-out 0s;
+    -webkit-text-fill-color: inherit !important;
+    caret-color: inherit;
+}
+
+:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    display: none;
+    -webkit-appearance: none;
+    margin: 0;
+}

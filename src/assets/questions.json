@@ -1,0 +1,20 @@
+[
+    {
+        "type": "simple",
+        "question": "Первый вопрос",
+        "options": ["Да", "Нет"],
+        "answer": 1
+    },
+    {
+        "type": "multiple",
+        "question": "Второй вопрос",
+        "options": ["1", "2", "3"],
+        "answer": [0, 1]
+    },
+    {
+        "type": "value",
+        "question": "Третий вопрос",
+        "options": null,
+        "answer": [0, 1]
+    }
+]
