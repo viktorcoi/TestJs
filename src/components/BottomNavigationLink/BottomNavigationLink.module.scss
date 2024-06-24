@@ -1,0 +1,17 @@
+.link {
+    width: 90px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.icon {
+    display: flex;
+    color: var(--bg-button-hover);
+}
+
+.text {
+    line-height: 14px;
+    font-size: 11px;
+}

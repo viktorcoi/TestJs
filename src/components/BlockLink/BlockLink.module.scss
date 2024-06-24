@@ -1,0 +1,39 @@
+.BlockLink {
+    --ratio-x: 0;
+    --ratio-y: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    position: relative;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    background-position: calc(100% - 10px) center;
+    background-repeat: no-repeat;
+    background-size: 80px;
+    cursor: pointer;
+    padding: 16px;
+    box-sizing: border-box;
+    gap: 12px;
+    border: 2px solid var(--bg-button);
+    &__name {
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: bold;
+    }
+    @media (hover: hover) {
+        &:after {
+            transition: .3s;
+            content: "";
+            z-index: -1;
+            position: absolute;
+            opacity: 0;
+            inset: 0;
+            background: radial-gradient(circle at calc(var(--ratio-x) * 100%) calc(var(--ratio-y) * 100%), hsla(calc(200 + (var(--ratio-x) + var(--ratio-y) / 2) * 100), 88%, 60%, 0.5), transparent 30%);
+        }
+        &:hover:after {
+            opacity: 1;
+        }
+    }
+}

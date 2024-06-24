@@ -1,0 +1,10 @@
+.question {
+    display: block;
+    white-space: pre-wrap;
+}
+
+.questions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

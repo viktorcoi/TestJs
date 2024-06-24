@@ -18,7 +18,11 @@ const Checked = (props: RadioProps) => {
             className
         )}>
             <input {...restProps} type={type} className={styles.input} />
-            <div className={styles.checked}/>
+            <div className={classNames(
+                styles.checked,
+                type === 'radio' && styles.checked__radio,
+                type === 'checkbox' && styles.checked__checkbox
+            )}/>
             <span>{children}</span>
         </label>
     )

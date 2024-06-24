@@ -1,20 +1,62 @@
 [
     {
         "type": "simple",
-        "question": "Первый вопрос",
+        "question": "JavaScript может выполняться как на клиентской, так и на серверной стороне?",
         "options": ["Да", "Нет"],
+        "answer": 0
+    },
+    {
+        "type": "simple",
+        "question": "Какое ключевое слово используется для объявления переменной, значение которой нельзя изменять?",
+        "options": ["let", "var", "const", "final"],
+        "answer": 2
+    },
+    {
+        "type": "simple",
+        "question": "Какой метод используется для добавления одного или нескольких элементов в конец массива?",
+        "options": ["push", "pop", "shift", "unshift"],
+        "answer": 0
+    },
+    {
+        "type": "value",
+        "question": "Какое значение будет у переменной x, если выполнится следующий код:\n\nlet x = 2 + '2'",
+        "options": null,
+        "answer": "22"
+    },
+    {
+        "type": "multiple",
+        "question": "Какие типы данных существуют в JavaScript?",
+        "options": ["string", "number", "float", "boolean"],
+        "answer": [0, 1, 3]
+    },
+    {
+        "type": "simple",
+        "question": "Какой оператор используется для сравнения значений без приведения типов?",
+        "options": ["==", "===", "!=", "="],
         "answer": 1
     },
     {
         "type": "multiple",
-        "question": "Второй вопрос",
-        "options": ["1", "2", "3"],
-        "answer": [0, 1]
+        "question": "Какие из следующих методов можно использовать для преобразования строк в числа?",
+        "options": ["parseInt", "Number", "toString", "parseFloat"],
+        "answer": [0, 1, 3]
     },
     {
         "type": "value",
-        "question": "Третий вопрос",
+        "question": "Напишите результат выполнения следующего кода:\n\nlet sum = 0;\n\nfor (let i = 1; i <= 5; i++) {\n    sum += i;\n}",
         "options": null,
-        "answer": [0, 1]
+        "answer": "15"
+    },
+    {
+        "type": "simple",
+        "question": "Какой символ используется для комментариев в одной строке в JavaScript?",
+        "options": ["//", "<!-- -->", "/* */", "#"],
+        "answer": 0
+    },
+    {
+        "type": "bigValue",
+        "question": "Как вам тестирование? Было ли легко или сложно, что бы вы добавили, что убрали? (ответ не влияет на результат)",
+        "options": null,
+        "answer": null
     }
 ]
