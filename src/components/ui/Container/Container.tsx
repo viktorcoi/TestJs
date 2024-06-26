@@ -13,10 +13,10 @@ const Container = (props: ContainerProps) => {
     } = props;
 
     return (
-        <div className={classNames(
+        <div {...restProps} className={classNames(
             styles.container,
             className
-        )} {...restProps}>
+        )}>
             {children}
         </div>
     )

@@ -5,4 +5,7 @@
     padding: 7px 8px;
     border-radius: 6px;
     border: 1px solid var(--bg-button);
+    &.readonly {
+        pointer-events: none;
+    }
 }

@@ -1,6 +1,6 @@
 export interface QuestionsType {
     "type": "simple" | "multiple" | "value" | "bigValue",
     "question": string,
-    "options": string[],
-    "answer": string | number[],
+    "options": string[] | null,
+    "answer": string | number[] | null | number,
 }

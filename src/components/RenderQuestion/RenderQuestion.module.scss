@@ -4,7 +4,25 @@
 }
 
 .questions {
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    &__answer {
+        padding: 8px;
+        border-radius: 8px;
+    }
+    &__error {
+        border: 2px solid var(--bg-button-red);
+    }
+    &__success {
+        border: 2px solid var(--bg-button-green);
+    }
+}
+
+.done {
+    font-size: 12px;
+    &__answer {
+        color: var(--bg-button-green);
+    }
 }

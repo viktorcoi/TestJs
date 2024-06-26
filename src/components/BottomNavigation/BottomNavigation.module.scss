@@ -8,6 +8,7 @@
     border-radius: 10px 10px 0 0;
     box-shadow: 0 -1px 10px var(--bg-step-active);
     padding: unset;
+    background-color: var(--bg-main);
     @media (max-width: 600px) {
         display: flex;
     }

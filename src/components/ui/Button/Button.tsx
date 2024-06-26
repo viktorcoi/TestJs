@@ -13,10 +13,10 @@ const Button = (props: ButtonProps) => {
     } = props;
 
     return (
-        <button className={classNames(
+        <button {...restProps} className={classNames(
             styles.button,
             className
-        )} {...restProps}>
+        )}>
             {children}
         </button>
     )

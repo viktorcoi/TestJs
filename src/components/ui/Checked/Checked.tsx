@@ -6,6 +6,7 @@ interface RadioProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 const Checked = (props: RadioProps) => {
 
     const {
+        readOnly,
         className,
         children,
         type = 'radio',
@@ -15,6 +16,7 @@ const Checked = (props: RadioProps) => {
     return (
         <label className={classNames(
             styles.wrapper,
+            readOnly && styles.readonly,
             className
         )}>
             <input {...restProps} type={type} className={styles.input} />

@@ -7,4 +7,7 @@
     border: 1px solid var(--bg-button);
     resize: none;
     min-height: 200px;
+    &.readonly {
+        pointer-events: none;
+    }
 }

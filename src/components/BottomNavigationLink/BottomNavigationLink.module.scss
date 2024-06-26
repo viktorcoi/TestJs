@@ -11,6 +11,10 @@
     color: var(--bg-button-hover);
 }
 
+.active {
+    color: var(--bg-button);
+}
+
 .text {
     line-height: 14px;
     font-size: 11px;

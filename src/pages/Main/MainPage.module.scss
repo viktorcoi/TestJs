@@ -2,8 +2,10 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+    padding-bottom: 20px;
     @media (max-width: 600px) {
         grid-template-columns: 1fr;
+        padding-bottom: 70px;
     }
     &__history {
         grid-column-start: 1;

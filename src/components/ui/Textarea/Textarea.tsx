@@ -1,19 +1,25 @@
 import React from "react";
-import styles from './Textarea.module.scss';
 import {classNames} from "../../../helpers/classNames";
+import styles from './Textarea.module.scss';
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
 const Textarea = (props: TextareaProps) => {
 
     const {
-        className
+        className,
+        readOnly,
+        ...restProps
     } = props;
 
     return (
-        <textarea className={classNames(
-            styles.textarea,
-            className
-        )} {...props}/>
+        <textarea {...restProps}
+            readOnly={readOnly}
+            className={classNames(
+                readOnly && styles.readonly,
+                styles.textarea,
+                className
+            )}
+        />
     )
 }
 

@@ -7,7 +7,7 @@ export interface infoTestTypes {
     timer: number;
     currentStep: number;
     ended: boolean;
-    data: (string | number | number[])[];
+    data: (string | number | number[] | null)[];
 }
 
 export interface TestsContextTypes extends Omit<TestsContextProviderProps, 'children'> {
@@ -17,6 +17,10 @@ export interface TestsContextTypes extends Omit<TestsContextProviderProps, 'chil
     countDoneTests: number;
     questions: QuestionsType[];
     percentDone: number;
+    newQuestions: QuestionsType[];
+    setNewQuestions: React.Dispatch<React.SetStateAction<QuestionsType[]>>;
+    allQuestions: QuestionsType[];
+    setAllQuestions: React.Dispatch<React.SetStateAction<QuestionsType[]>>;
 }
 
 export interface TestsContextProviderProps {

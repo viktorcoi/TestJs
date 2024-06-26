@@ -1,0 +1,23 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 20px;
+    @media (max-width: 600px) {
+        padding-bottom: 70px;
+    }
+}
+
+.plug {
+    align-items: center;
+    gap: 20px;
+}
+
+.nothing {
+    font-size: 20px;
+    line-height: 24px;
+    &__icon {
+        color: var(--bg-button-hover);
+        transform: rotate(45deg);
+    }
+}

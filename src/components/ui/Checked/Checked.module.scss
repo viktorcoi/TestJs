@@ -3,6 +3,9 @@
     gap: 6px;
     align-items: center;
     cursor: pointer;
+    &.readonly {
+        pointer-events: none;
+    }
 }
 
 .checked {

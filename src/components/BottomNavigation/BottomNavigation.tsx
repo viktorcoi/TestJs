@@ -6,8 +6,11 @@ import {ReactComponent as HistoryLogo} from "../../assets/img/svg/history.svg";
 import {ReactComponent as TestLogo} from "../../assets/img/svg/test.svg";
 import {ReactComponent as AddLogo} from "../../assets/img/svg/add.svg";
 import styles from './BottomNavigation.module.scss';
+import {useLocation} from "react-router-dom";
 
 const BottomNavigation = () => {
+
+    const {pathname} = useLocation();
 
     const {
         testLast
@@ -24,14 +27,26 @@ const BottomNavigation = () => {
 
     return (
         <Container className={styles.navigation}>
-            <BottomNavigationLink to={'/history'} icon={<HistoryLogo width={30} height={30}/>}>
+            <BottomNavigationLink
+                active={pathname === '/history'}
+                to={'/history'}
+                icon={<HistoryLogo width={30} height={30}/>
+            }>
                 История
             </BottomNavigationLink>
-            <BottomNavigationLink to={'/history'} icon={<TestLogo width={30} height={30}/>}>
+            <BottomNavigationLink
+                active={pathname === '/test'}
+                to={'/test'}
+                icon={<TestLogo width={30} height={30}/>}
+            >
                 {nameTestLink}
             </BottomNavigationLink>
-            <BottomNavigationLink to={'/history'} icon={<AddLogo width={30} height={30}/>}>
-                Добавить тест
+            <BottomNavigationLink
+                active={pathname === '/add'}
+                to={'/add'}
+                icon={<AddLogo width={30} height={30}/>}
+            >
+                Добавить вопрос
             </BottomNavigationLink>
         </Container>
     )

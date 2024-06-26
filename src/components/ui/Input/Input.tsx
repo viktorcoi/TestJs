@@ -8,14 +8,21 @@ const Input = (props: InputProps) => {
 
     const {
         type = 'text',
-        className
+        className,
+        readOnly,
+        ...restProps
     } = props;
 
     return (
-        <input className={classNames(
-            styles.input,
-            className
-        )} type={type} {...props}/>
+        <input {...restProps}
+            readOnly={readOnly}
+            className={classNames(
+                readOnly && styles.readonly,
+                styles.input,
+                className
+            )}
+            type={type}
+        />
     )
 }
 
