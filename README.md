@@ -1,3 +1,12 @@
+# TestJs
+
+<a href="https://test-js-gilt.vercel.app/">Click here to view the git page online</a>
+- Adaptive layout up to 320px;
+- Cross-browser layout;
+- Styled scss preprocessor;
+- Modular styles are used;
+- The application is made on React (TypeScript);
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
