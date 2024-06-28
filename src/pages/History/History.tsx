@@ -16,15 +16,16 @@ const History = () => {
         allQuestions,
         historyTests,
         countDoneTests,
-        percentDone
+        percentDone,
+        testLast
     } = useTestContext();
 
     return (
         <Container className={classNames(
             styles.wrapper,
-            !historyTests?.length && styles.plug
+            (!historyTests?.length || !testLast?.ended) && styles.plug
         )}>
-            {historyTests?.length ?
+            {historyTests?.length && testLast?.ended ?
                 <>
                     <span>Тестов завершено: <b>{countDoneTests}</b></span>
                     <span>Средний результат: <b>{percentDone}%</b></span>

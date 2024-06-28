@@ -14,7 +14,7 @@ export const arraysEqual = (arr1: number[], arr2: number[]) => {
 export const getTestResult = (answers: (string | number | number[] | null)[], questions: QuestionsType[]) => {
     let successAnswers = 0;
     questions.forEach(({answer}, key) => {
-        if (typeof(answer) === 'object' && answer !== null) {
+        if (typeof(answer) === 'object' && answer !== null && answers[key] !== null) {
             let sortAnswers = answers[key] as number[];
             const sortAnswer = answer.sort(compare);
             sortAnswers = sortAnswers.sort(compare);

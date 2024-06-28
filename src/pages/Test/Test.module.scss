@@ -4,8 +4,21 @@
     align-items: start;
     flex-grow: 1;
     padding-bottom: 20px;
+    &__end {
+        align-items: center;
+        gap: 20px;
+    }
     @media (max-width: 600px) {
         padding-bottom: 70px;
+    }
+}
+
+.end {
+    font-size: 20px;
+    line-height: 24px;
+    &__icon {
+        color: var(--bg-button);
+        transform: rotate(45deg);
     }
 }
 

@@ -6,13 +6,14 @@ import RenderQuestion from "../../components/RenderQuestion/RenderQuestion";
 import {infoTestTypes} from "../../context/types";
 import {timerTransform} from "../../helpers/timerTransform";
 import {useTestContext} from "../../context/TestsContext";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {QuestionsType} from "../../components/RenderQuestion/types";
+import {classNames} from "../../helpers/classNames";
+import {ReactComponent as DoneLogo} from "../../assets/img/svg/done.svg";
+import {ReactComponent as LogoClear} from "../../assets/img/svg/add.svg";
 import styles from './Test.module.scss';
 
 const Test = () => {
-
-    const navigate = useNavigate();
 
     const {
         historyTests,
@@ -25,6 +26,7 @@ const Test = () => {
     const [currentAnswer, setCurrentAnswer] = React.useState<string | number | number[]>('');
     const [time, setTime] = React.useState(0);
     const [questionsForTest, setQuestionsForTest] = React.useState<QuestionsType[]>([]);
+    const [testEnded, setTestEnded] = React.useState(false);
 
     const [infoTest, setInfoTest] = React.useState<infoTestTypes>({
         testId: 0,
@@ -36,27 +38,29 @@ const Test = () => {
     });
 
     React.useEffect(() => {
-        let infoTestUpdate: infoTestTypes = {...infoTest};
-        if (testLast !== null) {
-            if (testLast.ended) {
-                infoTestUpdate.countQuestions = allQuestions?.length;
-                infoTestUpdate.testId = testLast.testId + 1;
-                setQuestionsForTest(allQuestions);
-                setTime((allQuestions?.length * 1.5) * 60);
+        if (!testEnded) {
+            let infoTestUpdate: infoTestTypes = {...infoTest};
+            if (testLast !== null) {
+                if (testLast.ended) {
+                    infoTestUpdate.countQuestions = allQuestions?.length;
+                    infoTestUpdate.testId = testLast.testId + 1;
+                    setQuestionsForTest(allQuestions);
+                    setTime((allQuestions?.length * 1.5) * 60);
+                } else {
+                    infoTestUpdate.testId = testLast.testId;
+                    infoTestUpdate.data = testLast.data;
+                    infoTestUpdate.countQuestions = testLast.countQuestions;
+                    setTime(testLast.timer);
+                    setCurrentStep(testLast.currentStep);
+                    setQuestionsForTest(allQuestions.slice(0, testLast.countQuestions));
+                }
             } else {
-                infoTestUpdate.testId = testLast.testId;
-                infoTestUpdate.data = testLast.data;
-                infoTestUpdate.countQuestions = testLast.countQuestions;
-                setTime(testLast.timer);
-                setCurrentStep(testLast.currentStep);
-                setQuestionsForTest(allQuestions.slice(0, testLast.countQuestions));
+                infoTestUpdate.countQuestions = allQuestions?.length;
+                setTime((allQuestions?.length * 1.5) * 60);
+                setQuestionsForTest(allQuestions);
             }
-        } else {
-            infoTestUpdate.countQuestions = allQuestions?.length;
-            setTime((allQuestions?.length * 1.5) * 60);
-            setQuestionsForTest(allQuestions);
+            setInfoTest(infoTestUpdate);
         }
-        setInfoTest(infoTestUpdate);
     }, [testLast, allQuestions]);
 
     React.useEffect(() => {
@@ -75,15 +79,7 @@ const Test = () => {
         };
     }, [questionsForTest]);
 
-    const nextQuestion = () => {
-        setCurrentStep((prevState) => prevState + 1);
-        let infoTestUpdate: infoTestTypes = {...infoTest};
-        infoTestUpdate.timer = time;
-        infoTestUpdate.currentStep = currentStep + 1;
-        infoTestUpdate.data.push(currentAnswer);
-        if (currentStep === questionsForTest?.length - 1) {
-            infoTestUpdate.ended = true;
-        }
+    const saveTestData = (infoTestUpdate: infoTestTypes) => {
         let infoTestForSave: infoTestTypes[] = [...historyTests];
         if (infoTestForSave?.length) {
             if (testLast !== null && testLast.testId === infoTestUpdate.testId) {
@@ -97,71 +93,100 @@ const Test = () => {
         }
         localStorage.setItem(`history`, JSON.stringify(infoTestForSave));
         setHistoryTests(infoTestForSave);
+    }
+
+    const nextQuestion = () => {
+        setCurrentStep((prevState) => prevState + 1);
+        let infoTestUpdate: infoTestTypes = {...infoTest};
+        infoTestUpdate.timer = time;
+        infoTestUpdate.currentStep = currentStep + 1;
+        infoTestUpdate.data.push(currentAnswer);
+        if (currentStep === questionsForTest?.length - 1) {
+            infoTestUpdate.ended = true;
+        }
+        saveTestData(infoTestUpdate);
         setInfoTest(infoTestUpdate);
         setCurrentAnswer('');
         if (currentStep === questionsForTest?.length - 1) {
-            navigate(`/history/${infoTestUpdate.testId}`);
+            setTestEnded(true);
         }
     }
 
     React.useEffect(() => {
-        if (time === 0 && currentStep) {
+        if (time === 0 && questionsForTest?.length && currentStep < questionsForTest?.length - 1) {
             let infoTestUpdate: infoTestTypes = {...infoTest};
+            infoTestUpdate.ended = true;
+            infoTestUpdate.timer = 0;
             for (let i = currentStep; i < infoTestUpdate.countQuestions; i++) {
                 infoTestUpdate.data.push(null);
             }
+            saveTestData(infoTestUpdate);
+            setTestEnded(true);
         }
     }, [time]);
 
-    if (time === 0) return (
-        <Container className={styles.wrapper}>
-            <span>Время закончилось</span>
-            <Link to={`/history/${infoTest.testId}`}>
-                <Button>Перейти к результату теста</Button>
-            </Link>
-        </Container>
-    )
-
     return (
-        <Container className={styles.wrapper}>
-            <div className={styles.infoTest}>
-                <span>Вопрос {currentStep + 1} из {questionsForTest?.length}</span>
-                <span className={styles.timer}>{timerTransform(time)}</span>
-            </div>
-            <div
-                style={{
-                    gridTemplateColumns: `repeat(${questionsForTest?.length}, 1fr)`
-                }}
-                className={styles.steps}
-            >
-                {questionsForTest.map((item, key) => (
-                    <StepQuestion
-                        key={key}
-                        active={key === currentStep}
-                        done={currentStep > key}
-                    />
-                ))}
-            </div>
-            {questionsForTest[currentStep]?.type === 'simple' ? <span className={styles.typeQuestion}>Только один вариант ответа*</span>
-                : questionsForTest[currentStep]?.type === 'multiple' ? <span className={styles.typeQuestion}>Может быть несколько вариантов ответа*</span>
-                : <span className={styles.typeQuestion}>Напишите ответ в поля ввода*</span>
+        <Container className={classNames(
+            styles.wrapper,
+            testEnded && styles.wrapper__end
+        )}>
+            {testEnded ?
+                <>
+                    <span className={styles.end}><b>{(time === 0 && currentStep < questionsForTest?.length - 1) ?
+                        'Время закончилось' : 'Вы ответили на все вопросы'
+                    }</b></span>
+                    {time === 0 && currentStep < questionsForTest?.length - 1 ?
+                        <LogoClear width={65} height={65} className={styles.end__icon}/> :
+                        <DoneLogo width={65} height={65}/>
+                    }
+                    <Link to={`/history/${infoTest.testId}`}>
+                        <Button>Перейти к результату теста №{infoTest.testId + 1}</Button>
+                    </Link>
+                </>
+                :
+                <>
+                    <div className={styles.infoTest}>
+                        <span>Вопрос {currentStep + 1} из {questionsForTest?.length}</span>
+                        <span className={styles.timer}>{timerTransform(time)}</span>
+                    </div>
+                    <div
+                        style={{
+                            gridTemplateColumns: `repeat(${questionsForTest?.length}, 1fr)`
+                        }}
+                        className={styles.steps}
+                    >
+                        {questionsForTest.map((item, key) => (
+                            <StepQuestion
+                                key={key}
+                                active={key === currentStep}
+                                done={currentStep > key}
+                            />
+                        ))}
+                    </div>
+                    {questionsForTest[currentStep]?.type === 'simple' ? <span className={styles.typeQuestion}>Только один вариант ответа*</span>
+                        : questionsForTest[currentStep]?.type === 'multiple' ? <span className={styles.typeQuestion}>Может быть несколько вариантов ответа*</span>
+                        : <span className={styles.typeQuestion}>Напишите ответ в поля ввода*</span>
+                    }
+                    {questionsForTest.map((question, key) => {
+                        if (key === currentStep) return (
+                            <RenderQuestion onChange={setCurrentAnswer} key={key} question={question}/>
+                        )
+                    })}
+                    <Button
+                        disabled={
+                            currentAnswer === '' ||
+                            (typeof(currentAnswer) === 'string' && currentAnswer.trim() === '') ||
+                            (typeof(currentAnswer) === 'object' && currentAnswer?.length === 0)
+                        }
+                        className={styles.button}
+                        onClick={nextQuestion}
+                    >
+                        {questionsForTest.length - 1 < currentStep + 1 ?  'Закончить тест' : 'Следующий вопрос'}
+                    </Button>
+
+                </>
+
             }
-            {questionsForTest.map((question, key) => {
-                if (key === currentStep) return (
-                    <RenderQuestion onChange={setCurrentAnswer} key={key} question={question}/>
-                )
-            })}
-            <Button
-                disabled={
-                    currentAnswer === '' ||
-                    (typeof(currentAnswer) === 'string' && currentAnswer.trim() === '') ||
-                    (typeof(currentAnswer) === 'object' && currentAnswer?.length === 0)
-                }
-                className={styles.button}
-                onClick={nextQuestion}
-            >
-                {questionsForTest.length - 1 < currentStep + 1 ?  'Закончить тест' : 'Следующий вопрос'}
-            </Button>
         </Container>
     )
 }
